@@ -21,7 +21,7 @@ async def get_books_by_name(name: str) -> list[tuple[str, str, str, int]]:
     with get_connection() as conn:
         cur = conn.cursor()
         cur.execute("""
-            SELECT name, author, genre, year FROM books WHERE name = ?
+            SELECT name, author, genre, year FROM books WHERE LOWER(name) LIKE '%' || LOWER(?) || '%'
         """, (name,))
         return cur.fetchall()
 
@@ -30,6 +30,6 @@ async def get_books_by_author(author: str) -> list[tuple[str, str, str, int]]:
     with get_connection() as conn:
         cur = conn.cursor()
         cur.execute("""
-            SELECT name, author, genre, year FROM books WHERE author = ?
+            SELECT name, author, genre, year FROM books WHERE LOWER(author) LIKE '%' || LOWER(?) || '%'
         """, (author,))
         return cur.fetchall()
