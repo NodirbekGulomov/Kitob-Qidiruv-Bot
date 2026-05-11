@@ -2,8 +2,6 @@ from aiogram import Router
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 
-from app.buttons.inline_buttons import search_selection_buttons
-
 router = Router()
 
 
@@ -17,4 +15,4 @@ async def start_handler(message: Message):
         "- muallif nomini\n"
         "yuboring."
     )
-    await message.answer(text=text, reply_markup=search_selection_buttons)
+    await message.answer(text=text)

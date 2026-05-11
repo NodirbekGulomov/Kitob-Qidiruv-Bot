@@ -1,4 +1,4 @@
-async def format_books(books: list[type[str, str, str, int]]) -> str:
+async def format_books(books: list[tuple[str, str, str, int]]) -> str:
     text = "----------------"
     for name, author, genre, year in books:
         text += (
