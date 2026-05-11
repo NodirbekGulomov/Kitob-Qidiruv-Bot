@@ -9,7 +9,7 @@ def clean_books_table() -> None:
         """)
 
 
-async def add_book(name: str, author: str, genre: str, year: int) -> None:
+def add_book(name: str, author: str, genre: str, year: int) -> None:
     with get_connection() as conn:
         cur = conn.cursor()
         cur.execute("""
