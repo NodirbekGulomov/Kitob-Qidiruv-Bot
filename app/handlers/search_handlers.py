@@ -7,24 +7,15 @@ from app.services.formatter import format_books
 router = Router()
 
 
-@router.message(F.text)
+@router.message(F.text.startswith("/kitob"))
 async def search_handler(message: Message) -> None:
     if message.text:
+        book = message.text.replace("/kitob", "").strip()
+        await message.answer(text=await format_books(await get_books_by_name(book)))
 
-        name, what = message.text.split("-")
 
-        if what.endswith("kitob nomini"):
-            await message.answer(text=await format_books(await get_books_by_name(name)))
-            return
-        elif what.endswith("muallif nomini"):
-            await message.answer(text=await format_books(await get_books_by_author(name)))
-            return
-
-        text = (
-            "nom - kitob nomini\n"
-            "yoki\n"
-            "nom - muallif nomini\n"
-            "yuqoridagi formatda kiriting."
-        )
-
-        await message.answer(text=text)
+@router.message(F.text.startswith("/muallif"))
+async def search_by_author_handler(message: Message) -> None:
+    if message.text:
+        author = message.text.replace("/muallif", "").strip()
+        await message.answer(text=await format_books(await get_books_by_author(author)))
